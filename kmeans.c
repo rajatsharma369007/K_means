@@ -164,6 +164,7 @@ kmean(int count , float datax[], float datay[])
         mean[1][1] = tempy1/(count-j);
 
         //printing the calculated centroid of cluster 0 and cluster 1
+        printf("------------Euclidean distance---------\n");
         printf("%f %f, %f %f---------------------%2d %2d\n",mean[0][0], mean[0][1], mean[1][0], mean[1][1],j, count-j);
 
         tempx=tempy=tempx1=tempy1=0;
@@ -191,6 +192,7 @@ kmean(int count , float datax[], float datay[])
         mean1[1][1] = tempy1/(count-j);
         
         //printing the calculated centroid of cluster 0 and cluster 1
+        printf("------------Manhattan distance----------\n");
         printf("%f %f, %f %f---------------------%2d %2d\n",mean1[0][0], mean1[0][1], mean1[1][0], mean1[1][1],j, count - j);
 
         tempx=tempy=tempx1=tempy1=0;
@@ -218,6 +220,7 @@ kmean(int count , float datax[], float datay[])
         mean2[1][1] = tempy1/(count-j);
 
         //printing the calculated centroid of cluster 0 and cluster 1
+        printf("------------Minkwoski measure------------\n");
         printf("%f %f, %f %f---------------------%2d %2d\n\n",mean2[0][0], mean2[0][1], mean2[1][0], mean2[1][1],j, count-j);
         
         // for printing the cluster
