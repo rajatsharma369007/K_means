@@ -175,20 +175,22 @@ kmean(int count , float datax[], float datay[])
             {
                 tempx += datax[i];      //tempx, tempy is used to calculate the centroid of cluster0
                 tempy += datay[i];
-                j++;                    //tempx1, tempy1 is used to cula
+                j++;                    //to get the number of datapoints in cluster 0
             }
             else
             {
-                tempx1 += datax[i];
+                tempx1 += datax[i];     //tempx1, tempy1 is used to calculate the centroid of cluster1
                 tempy1 += datay[i];
             }
         }
-
+        
+        //new centroid calculation for both the clusters
         mean1[0][0] = tempx/j;
         mean1[0][1] = tempy/j;
         mean1[1][0] = tempx1/(count-j);
         mean1[1][1] = tempy1/(count-j);
-
+        
+        //printing the calculated centroid of cluster 0 and cluster 1
         printf("%f %f, %f %f---------------------%2d %2d\n",mean1[0][0], mean1[0][1], mean1[1][0], mean1[1][1],j, count - j);
 
         tempx=tempy=tempx1=tempy1=0;
@@ -198,34 +200,36 @@ kmean(int count , float datax[], float datay[])
         {
             if(cluster2[i]==0)
             {
-                tempx += datax[i];
+                tempx += datax[i];      //tempx, tempy is used to calculate the centroid of cluster 0
                 tempy += datay[i];
-                j++;
+                j++;                    //to get the number of datapoints in cluster 0
             }
             else
             {
-                tempx1 += datax[i];
+                tempx1 += datax[i];     //tempx1, tempy1 is used to calculate the centroid of cluster 1
                 tempy1 += datay[i];
             }
         }
-
+        
+        //new centroid calculation for both the clusters
         mean2[0][0] = tempx/j;
         mean2[0][1] = tempy/j;
         mean2[1][0] = tempx1/(count-j);
         mean2[1][1] = tempy1/(count-j);
 
+        //printing the calculated centroid of cluster 0 and cluster 1
         printf("%f %f, %f %f---------------------%2d %2d\n\n",mean2[0][0], mean2[0][1], mean2[1][0], mean2[1][1],j, count-j);
-
+        
         // for printing the cluster
         for(i=0; i<count; i++)
         {
             printf("%d \t %d \t %d\n", cluster[i], cluster1[i], cluster2[i]);
         }
-
+        
+        //to break the loop once the previous and current mean are equal
         if(prev_mean[0][0]==mean[0][0] && prev_mean[0][1]==mean[0][1] && prev_mean[1][0]==mean[1][0] && prev_mean[1][1]==mean[1][1])
             flag=1;
 
         printf("-------%d iteration ---------\n\n",l);
-        l++;
     }
 }
