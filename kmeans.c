@@ -5,6 +5,7 @@
 
 int count=0;
 
+//fuction defintion
 void kmean(int, float [], float []);
 
 main(){
@@ -13,13 +14,14 @@ main(){
     int arr[10][2], i=0, j=0;
     char line[20],line1[20],c;
 
+    //to count the number of data points
     while((c=fgetc(fp)) != EOF)
     {
         if(c=='\n')
             count++;
     }
     count++;
-    rewind(fp);
+    rewind(fp);     //to bring the pointer at the beginning
 
     float sdx, sdy, meanx, meany, tempx=0, tempy=0;
     float datax[count], datay[count], sumx=0, sumy=0;
@@ -29,11 +31,11 @@ main(){
     //retrieving data from file
     while(!feof(fp))
     {
-        fscanf(fp,"%s %s",line,line1);
-        datax[i] = atof(line);
+        fscanf(fp,"%s %s",line,line1);          //retrieving the data from file
+        datax[i] = atof(line);                  //conversion of text to float
         datay[i] = atof(line1);
         printf(" %f | %f\n",datax[i],datay[i]);
-        sumx += datax[i];
+        sumx += datax[i];                       //sumx, sumy to be used in mean calulation
         sumy += datay[i];
         i++;
     }
@@ -42,7 +44,7 @@ main(){
     meanx = sumx/count;
     meany = sumy/count;
 
-    //calculation of summation(data-mean)^2
+    //calculation of summation(data-mean)^2, to be used in standard deviation calculation
     i=0;
     while(i<count)
     {
@@ -74,6 +76,7 @@ main(){
         i++;
     }
 
+    //function call
     kmean(count, datax, datay);
 
 }
@@ -84,20 +87,23 @@ kmean(int count , float datax[], float datay[])
     float tempx=0, tempy=0, tempx1=0, tempy1=0;
 
     printf("the value of k : 2\n\n");
-  //  scanf("%d",&k);
+    k=2;
+  //  scanf("%d",&k);   implemented for two clusters  
 
     float mean[k][2], mean1[k][2], mean2[k][2], prev_mean[k][2];
 
+    //for taking first two data points as centroids
     for(i=0;i<k;i++)
     {
-        mean[i][0] = datax[i];
+        mean[i][0] = datax[i];          //centroid points for euclidean measure
         mean[i][1] = datay[i];
-        mean1[i][0] = mean[i][0];
+        mean1[i][0] = mean[i][0];       //centroid points for manhattan measure
         mean1[i][1] = mean[i][1];
-        mean2[i][0] = mean[i][0];
+        mean2[i][0] = mean[i][0];       //centroid points for minkwoski measure
         mean2[i][1] = mean[i][1];
     }
 
+    //loop for preparing the cluster
     while(!flag)
     {
         //using Eucledian distance
@@ -127,46 +133,49 @@ kmean(int count , float datax[], float datay[])
                 cluster2[i]=1;
         }
 
+        //prev_mean is used for stopping the loop when previous and current mean are equal
         prev_mean[0][0]=mean[0][0];
         prev_mean[0][1]=mean[0][1];
         prev_mean[1][0]=mean[1][0];
         prev_mean[1][1]=mean[1][1];
 
         tempx=tempy=tempx1=tempy1=0;
-        j=1;
+        j=0;
         //for Euclidean distance measure
         for(i=0;i<count;i++)
         {
             if(cluster[i]==0)
             {
-                tempx += datax[i];
+                tempx += datax[i];      //tempx, tempy is used to calculate the centroid of cluster0
                 tempy += datay[i];
-                j++;
+                j++;                    //to get the number of data points in cluster 0
             }
             else
             {
-                tempx1 += datax[i];
+                tempx1 += datax[i];     //tempx1, tempy1 is used to calculate the centroid of cluster1
                 tempy1 += datay[i];
             }
         }
 
+        //new centroid calculation for both the clusters 
         mean[0][0] = tempx/j;
         mean[0][1] = tempy/j;
         mean[1][0] = tempx1/(count-j);
         mean[1][1] = tempy1/(count-j);
 
+        //printing the calculated centroid of cluster 0 and cluster 1
         printf("%f %f, %f %f---------------------%2d %2d\n",mean[0][0], mean[0][1], mean[1][0], mean[1][1],j, count-j);
 
         tempx=tempy=tempx1=tempy1=0;
-        j=1;
+        j=0;
         //for Manhattan distance measure
         for(i=0;i<count;i++)
         {
             if(cluster1[i]==0)
             {
-                tempx += datax[i];
+                tempx += datax[i];      //tempx, tempy is used to calculate the centroid of cluster0
                 tempy += datay[i];
-                j++;
+                j++;                    //tempx1, tempy1 is used to cula
             }
             else
             {
@@ -183,7 +192,7 @@ kmean(int count , float datax[], float datay[])
         printf("%f %f, %f %f---------------------%2d %2d\n",mean1[0][0], mean1[0][1], mean1[1][0], mean1[1][1],j, count - j);
 
         tempx=tempy=tempx1=tempy1=0;
-        j=1;
+        j=0;
         //for Minkwoski distance measure
         for(i=0;i<count;i++)
         {
