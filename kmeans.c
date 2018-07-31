@@ -1,3 +1,8 @@
+// Description of code: this is a C code to implement the kmeans cluster to cluster two classes.
+// Date of release: february, 2018
+// Author's name: Rajat Sharma
+
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
